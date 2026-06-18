@@ -144,7 +144,7 @@ If you want to mark redirect clicks as conversions:
 
 ## 🧑‍💻 Author
 
-**Alias (Pickle Juice)**  
+**@my-code-library**  
 Clean, minimal, creator‑focused WordPress tools.
 
 ```
