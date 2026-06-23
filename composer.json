@@ -1,0 +1,14 @@
+{
+  "name": "my-code-library/wp-link-redirect-track",
+  "description": "Creates trackable redirect pages that fire GA4 events before redirecting.",
+  "type": "wordpress-plugin",
+  "license": "MIT",
+  "authors": [
+    {
+      "name": "@my-code-library"
+    }
+  ],
+  "require": {
+    "php": ">=7.4"
+  }
+}
