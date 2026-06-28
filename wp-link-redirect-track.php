@@ -149,3 +149,105 @@ function wplr_send_ga4_server_event($label, $destination, $slug) {
         'timeout'     => 3,
     ));
 }
+
+/**
+ * Register plugin settings
+ */
+function wplr_register_settings() {
+
+    // GA4
+    register_setting('wplr_settings_group', 'wplr_ga4_measurement_id', ['sanitize_callback' => 'sanitize_text_field']);
+    register_setting('wplr_settings_group', 'wplr_ga4_api_secret', ['sanitize_callback' => 'sanitize_text_field']);
+
+    // UTM defaults
+    register_setting('wplr_settings_group', 'wplr_utm_source', ['sanitize_callback' => 'sanitize_text_field']);
+    register_setting('wplr_settings_group', 'wplr_utm_medium', ['sanitize_callback' => 'sanitize_text_field']);
+    register_setting('wplr_settings_group', 'wplr_utm_campaign_default', ['sanitize_callback' => 'sanitize_text_field']);
+
+    // Redirect delay (ms)
+    register_setting('wplr_settings_group', 'wplr_redirect_delay', ['sanitize_callback' => 'intval']);
+
+    // Toggle server-side tracking
+    register_setting('wplr_settings_group', 'wplr_enable_server_tracking', ['sanitize_callback' => 'intval']);
+}
+add_action('admin_init', 'wplr_register_settings');
+
+
+/**
+ * Add settings page to WP admin
+ */
+function wplr_add_settings_page() {
+    add_options_page(
+        'WP Link Redirect Track Settings',
+        'WP Link Redirect Track',
+        'manage_options',
+        'wplr-settings',
+        'wplr_render_settings_page'
+    );
+}
+add_action('admin_menu', 'wplr_add_settings_page');
+
+
+/**
+ * Render settings page
+ */
+function wplr_render_settings_page() {
+    ?>
+    <div class="wrap">
+        <h1>WP Link Redirect Track — Settings</h1>
+
+        <form method="post" action="options.php">
+            <?php settings_fields('wplr_settings_group'); ?>
+
+            <h2>GA4 Measurement Protocol</h2>
+            <table class="form-table">
+                <tr>
+                    <th scope="row">GA4 Measurement ID</th>
+                    <td><input type="text" name="wplr_ga4_measurement_id" value="<?php echo esc_attr(get_option('wplr_ga4_measurement_id')); ?>" class="regular-text"></td>
+                </tr>
+                <tr>
+                    <th scope="row">GA4 API Secret</th>
+                    <td><input type="text" name="wplr_ga4_api_secret" value="<?php echo esc_attr(get_option('wplr_ga4_api_secret')); ?>" class="regular-text"></td>
+                </tr>
+                <tr>
+                    <th scope="row">Enable Server-Side Tracking</th>
+                    <td>
+                        <label>
+                            <input type="checkbox" name="wplr_enable_server_tracking" value="1" <?php checked(get_option('wplr_enable_server_tracking'), 1); ?>>
+                            Yes, send server-side GA4 events
+                        </label>
+                    </td>
+                </tr>
+            </table>
+
+            <h2>UTM Defaults</h2>
+            <table class="form-table">
+                <tr>
+                    <th scope="row">UTM Source</th>
+                    <td><input type="text" name="wplr_utm_source" value="<?php echo esc_attr(get_option('wplr_utm_source', 'threads')); ?>" class="regular-text"></td>
+                </tr>
+                <tr>
+                    <th scope="row">UTM Medium</th>
+                    <td><input type="text" name="wplr_utm_medium" value="<?php echo esc_attr(get_option('wplr_utm_medium', 'social')); ?>" class="regular-text"></td>
+                </tr>
+                <tr>
+                    <th scope="row">Default UTM Campaign</th>
+                    <td><input type="text" name="wplr_utm_campaign_default" value="<?php echo esc_attr(get_option('wplr_utm_campaign_default')); ?>" class="regular-text">
+                        <p class="description">If empty, slug will be used automatically.</p>
+                    </td>
+                </tr>
+            </table>
+
+            <h2>Redirect Behavior</h2>
+            <table class="form-table">
+                <tr>
+                    <th scope="row">Redirect Delay (ms)</th>
+                    <td><input type="number" name="wplr_redirect_delay" value="<?php echo esc_attr(get_option('wplr_redirect_delay', 150)); ?>" class="small-text"></td>
+                </tr>
+            </table>
+
+            <?php submit_button(); ?>
+        </form>
+    </div>
+    <?php
+}
