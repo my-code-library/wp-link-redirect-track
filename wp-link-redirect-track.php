@@ -83,6 +83,9 @@ function wplr_redirect_template() {
     // Log click
     wplr_log_click($post->ID);
 
+    // Server-side GA4 event
+    wplr_send_ga4_server_event($label, $utm_url, $slug);
+
     // Output GA4 + redirect
     echo '<!DOCTYPE html><html><head><meta charset="utf-8"><title>Redirecting…</title></head><body>';
 
