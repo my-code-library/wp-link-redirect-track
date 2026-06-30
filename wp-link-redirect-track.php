@@ -2,9 +2,12 @@
 /**
  * Plugin Name: WP Link Redirect Track
  * Description: Creates trackable redirect pages that fire GA4 events before redirecting.
- * Version: 0.0.3
+ * Version: 0.0.4
  * Author: @my-code-library
- *
+ */
+
+/**
+ * 
  * MIT License
  * 
  * Copyright (c) 2026 @my-code-library
