@@ -1,6 +1,6 @@
 # WP Link Redirect Track
 
-[![Version](https://img.shields.io/badge/version-0.0.3-blue.svg)](./CHANGELOG.md)
+[![Version](https://img.shields.io/badge/version-0.0.4-blue.svg)](./CHANGELOG.md)
 [![License](https://img.shields.io/badge/license-MIT-green.svg)](#license)
 [![WordPress](https://img.shields.io/badge/wordpress-compatible-brightgreen.svg)](https://wordpress.org)
 [![PHP](https://img.shields.io/badge/php-7.4%2B-777BB4.svg)](https://www.php.net/)
